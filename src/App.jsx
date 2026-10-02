@@ -9,49 +9,48 @@ const Part = (props) => {
 };
 
 const Header = (props) => {
-  return <h1>{props.course}</h1>;
+  return <h1>{props.course.name}</h1>;
 };
 
 const Content = (props) => {
   return (
     <div>
-      <Part part={props.parts[0]} />
-      <Part part={props.parts[1]} />
-      <Part part={props.parts[2]} />
+      {props.parts.map((part, index) => (
+        <Part key={index} part={part} />
+      ))}
     </div>
   );
 };
 
 const Total = (props) => {
-  const total =
-    props.parts[0].exercises +
-    props.parts[1].exercises +
-    props.parts[2].exercises;
+  const total = props.parts.reduce((sum, part) => sum + part.exercises, 0);
   return <p>Number of exercises {total}</p>;
 };
 
 const App = () => {
-  const course = 'Application Development';
-  const parts = [
-    {
-      name: 'Software Development',
-      exercises: 3,
-    },
-    {
-      name: 'UML Diagram',
-      exercises: 3,
-    },
-    {
-      name: 'Software Engineering',
-      exercises: 3,
-    },
-  ];
+  const course = {
+    name: 'Application Development',
+    parts: [
+      {
+        name: 'Software Development',
+        exercises: 3,
+      },
+      {
+        name: 'UML Diagram',
+        exercises: 3,
+      },
+      {
+        name: 'Software Engineering',
+        exercises: 3,
+      },
+    ],
+  };
 
   return (
     <div>
       <Header course={course} />
-      <Content parts={parts} />
-      <Total parts={parts} />
+      <Content parts={course.parts} />
+      <Total parts={course.parts} />
       <Footer 
         fullName="Kim Bryan E. Pasu-it" 
         courseCode="CSIT340" 
